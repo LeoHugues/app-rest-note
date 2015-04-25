@@ -76,6 +76,22 @@ class Eleve extends Service
     }
 
     /**
+     * @param $filtre
+     * @return array
+     */
+    public function getEleveWithFiltre($filtre){
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $statement = $connection->prepare('SELECT * from eleve WHERE classe_id = '.$filtre['classe_id']);
+
+        $statement->execute();
+        $eleves = $statement->fetchAll();
+
+        return $eleves;
+    }
+
+    /**
      * @param $idClasse
      * @param $firstName
      * @param $lastName

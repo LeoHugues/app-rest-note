@@ -54,21 +54,36 @@ class Eleve extends Resource
     {
         $params = json_decode($this->getSlim()->request()->getBody(), true);
 
-        if (empty($params['idClasse']) || empty($params['firstName']) || empty($params['lastName']) || empty($params['email']) || empty($params['dateOfBirth'])
-            || $params['idClasse'] === null || $params['firstName'] === null || $params['lastName'] === null || $params['email'] === null || $params['dateOfBirth'] === null) {
-            self::response(self::STATUS_BAD_REQUEST);
-            return;
+        if(array_key_exists("filtre", $params))
+        {
+            $data = $this->getEleveService()->getEleveWithFiltre($params['filtre']);
+
+            if ($data === null) {
+                self::response(self::STATUS_NOT_FOUND);
+                return;
+            }
+
+            $response = array('eleves' => $data);
+            self::response(self::STATUS_OK, $response);
+
+        } else {
+
+            if (empty($params['idClasse']) || empty($params['firstName']) || empty($params['lastName']) || empty($params['email']) || empty($params['dateOfBirth'])
+                || $params['idClasse'] === null || $params['firstName'] === null || $params['lastName'] === null || $params['email'] === null || $params['dateOfBirth'] === null) {
+                self::response(self::STATUS_BAD_REQUEST);
+                return;
+            }
+
+            $note = $this->getEleveService()->createEleve(
+                $params['idClasse'],
+                $params['firstName'],
+                $params['lastName'],
+                $params['email'],
+                Carbon::createFromFormat('d-m-Y', $params['dateOfBirth'])
+            );
+
+            self::response(self::STATUS_CREATED, array('eleve', $note));
         }
-
-        $note = $this->getEleveService()->createEleve(
-            $params['idClasse'],
-            $params['firstName'],
-            $params['lastName'],
-            $params['email'],
-            Carbon::createFromFormat('d-m-Y', $params['dateOfBirth'])
-        );
-
-        self::response(self::STATUS_CREATED, array('eleve', $note));
     }
 
     /**

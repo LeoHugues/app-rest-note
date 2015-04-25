@@ -34,7 +34,7 @@ class Classe extends Service
             'created'      => $classe->getCreated(),
             'updated'      => $classe->getUpdated(),
             'name'         => $classe->getName(),
-            'notes'        => $classe->getEleves()
+            'eleves'       => $classe->getEleves()
         );
     }
 
@@ -61,7 +61,7 @@ class Classe extends Service
                 'created'      => $classe->getCreated(),
                 'updated'      => $classe->getUpdated(),
                 'name'         => $classe->getName(),
-                'notes'        => $classe->getEleves()
+                'eleves'       => $classe->getEleves()
             );
         }
 
@@ -72,7 +72,7 @@ class Classe extends Service
      * @param $name
      * @return array
      */
-    public function createMatiere($name)
+    public function createClasse($name)
     {
         $classe = new ClasseEntity();
         $classe->setName($name);
@@ -85,7 +85,7 @@ class Classe extends Service
             'created'      => $classe->getCreated(),
             'updated'      => $classe->getUpdated(),
             'name'         => $classe->getName(),
-            'notes'        => $classe->getEleves()
+            'eleves'       => $classe->getEleves()
         );
     }
 

@@ -58,11 +58,11 @@ class Classe extends Resource
             return;
         }
 
-        $note = $this->getClasseService()->createMatiere(
+        $classe = $this->getClasseService()->createClasse(
             $params['name']
         );
 
-        self::response(self::STATUS_CREATED, array('eleve', $note));
+        self::response(self::STATUS_CREATED, array('classe', $classe));
     }
 
     /**
@@ -77,12 +77,12 @@ class Classe extends Resource
             return;
         }
 
-        $note = $this->getClasseService()->updateClasse(
+        $classe = $this->getClasseService()->updateClasse(
             $id,
             $params['name']
         );
 
-        if ($note === null) {
+        if ($classe === null) {
             self::response(self::STATUS_NOT_IMPLEMENTED);
             return;
         }
