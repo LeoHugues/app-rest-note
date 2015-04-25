@@ -112,8 +112,6 @@ abstract class Resource
         $slim->status($status);
         $slim->response()->header('Content-Type', 'application/json');
 
-        //die(var_dump($data));
-
         if (!empty($data)) {
             $slim->response()->body(json_encode($data));
         }

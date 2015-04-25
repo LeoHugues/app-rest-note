@@ -175,7 +175,7 @@ class Eleve extends Service
             return false;
         }
 
-        $this->getEntityManager()->remove($eleve);die();
+        $this->getEntityManager()->remove($eleve);
         $this->getEntityManager()->flush();
 
         return true;

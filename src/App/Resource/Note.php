@@ -56,8 +56,8 @@ class Note extends Resource
         $params = json_decode($this->getSlim()->request()->getBody(), true);
         $date = Carbon::createFromFormat('d-m-Y', $params['date']);
 
-        if(empty($params['nbPoint']) || empty($params['coefficient']) || empty($params['date']) || empty($params['idMatiere']) || empty($params['idEleve'])
-            || $params['nbPoint'] === null || $params['coefficient'] === null || $params['date'] === null || $params['idMatiere'] === null || $params['idEleve'] === null) {
+        if(empty($params['nbPoint']) || empty($params['coefficient']) || empty($params['appreciation']) || empty($params['date']) || empty($params['idMatiere']) || empty($params['idEleve'])
+            || $params['nbPoint'] === null || $params['coefficient'] === null || $params['appreciation'] === null || $params['date'] === null || $params['idMatiere'] === null || $params['idEleve'] === null) {
             self::response(self::STATUS_BAD_REQUEST);
             return;
         }

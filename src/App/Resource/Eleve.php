@@ -53,29 +53,19 @@ class Eleve extends Resource
     public function post()
     {
         $params = json_decode($this->getSlim()->request()->getBody(), true);
-        $email = null;
-        $dateOfBirth = null;
 
-        if (empty($params['idClasse']) || empty($params['firstName']) || empty($params['lastName'])
-            || $params['idClasse'] === null || $params['firstName'] === null || $params['lastName'] === null) {
+        if (empty($params['idClasse']) || empty($params['firstName']) || empty($params['lastName']) || empty($params['email']) || empty($params['dateOfBirth'])
+            || $params['idClasse'] === null || $params['firstName'] === null || $params['lastName'] === null || $params['email'] === null || $params['dateOfBirth'] === null) {
             self::response(self::STATUS_BAD_REQUEST);
             return;
-        }
-        if(array_key_exists('email', $params ))
-        {
-            $email = $params['email'];
-        }
-        if(array_key_exists('dateOfBirth', $params ))
-        {
-            $dateOfBirth = Carbon::createFromFormat('d-m-Y', $params['dateOfBirth']);
         }
 
         $note = $this->getEleveService()->createEleve(
             $params['idClasse'],
             $params['firstName'],
             $params['lastName'],
-            $email,
-            $dateOfBirth
+            $params['email'],
+            Carbon::createFromFormat('d-m-Y', $params['dateOfBirth'])
         );
 
         self::response(self::STATUS_CREATED, array('eleve', $note));

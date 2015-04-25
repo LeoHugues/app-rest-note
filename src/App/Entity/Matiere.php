@@ -36,7 +36,7 @@ class Matiere extends Entity
     private $descriptions;
 
     /**
-     * @OneToMany(targetEntity="Note", mappedBy="matiere", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="Note", mappedBy="matieres", cascade={"persist"})
      * @var ArrayCollection
      */
     private $notes;

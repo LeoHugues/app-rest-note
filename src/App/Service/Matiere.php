@@ -146,7 +146,6 @@ class Matiere extends Service {
          */
         $repository = $this->getEntityManager()->getRepository('App\Entity\Matiere');
         $matiere = $repository->find($id);
-
         if ($matiere === null) {
             return false;
         }
