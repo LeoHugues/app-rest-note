@@ -78,6 +78,22 @@ class Note extends Service
     }
 
     /**
+     * @param $id
+     * @return array
+     */
+    public function getNoteByIdEleve($id) {
+        $em = $this->getEntityManager();
+        $connection = $em->getConnection();
+
+        $statement = $connection->prepare('SELECT * from notes WHERE eleve_id = '.$id);
+
+        $statement->execute();
+        $notes = $statement->fetchAll();
+
+        return $notes;
+    }
+
+    /**
      * @param $nbPoint
      * @param $coefficient
      * @param $appreciation

@@ -53,6 +53,7 @@ class Matiere extends Resource {
     {
         $params = json_decode($this->getSlim()->request()->getBody(), true);
 
+
         if (empty($params['nom']) || empty($params['coefficient']) || empty($params['description'])
             || $params['nom'] === null || $params['coefficient'] === null || $params['description'] === null) {
             self::response(self::STATUS_BAD_REQUEST);
