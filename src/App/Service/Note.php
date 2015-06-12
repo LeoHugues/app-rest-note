@@ -78,19 +78,33 @@ class Note extends Service
     }
 
     /**
-     * @param $id
-     * @return array
+     * @param $filtre
+     * @return array|null
      */
-    public function getNoteByIdEleve($id) {
+    public function getNoteWithFiltre($filtre) {
+
         $em = $this->getEntityManager();
         $connection = $em->getConnection();
 
-        $statement = $connection->prepare('SELECT * from notes WHERE eleve_id = '.$id);
+        if(array_key_exists("idMatiere", $filtre) && array_key_exists("idEleve", $filtre)) {
+            $statement = $connection->prepare(
+                'SELECT * from notes WHERE matiere_id = '.$filtre['idMatiere'].' AND eleve_id = '.$filtre['idEleve']
+            );
 
-        $statement->execute();
-        $notes = $statement->fetchAll();
+            $statement->execute();
+            $notes = $statement->fetchAll();
 
-        return $notes;
+            return $notes;
+        } elseif (array_key_exists("idEleve", $filtre)) {
+            $statement = $connection->prepare('SELECT * from notes WHERE eleve_id = '.$filtre['idEleve']);
+
+            $statement->execute();
+            $notes = $statement->fetchAll();
+
+            return $notes;
+        }
+
+        return null;
     }
 
     /**

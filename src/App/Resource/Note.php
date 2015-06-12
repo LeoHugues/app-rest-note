@@ -56,21 +56,18 @@ class Note extends Resource
         $params = json_decode($this->getSlim()->request()->getBody(), true);
 
         if(array_key_exists("filtre", $params)) {
-            $filtre = $params["filtre"];
-            if(empty($filtre["idEleve"]) || $filtre["idEleve"] === null){
-                self::response(self::STATUS_BAD_REQUEST);
-            } else {
-                $notes = $this->getNoteService()->getNoteByIdEleve($filtre["idEleve"]);
-                if ($notes === null) {
-                    self::response(self::STATUS_NOT_FOUND);
-                    return;
-                }
-                $reponse = array('notes' => $notes);
-                self::response(self::STATUS_OK, $reponse);
+
+            $notes = $this->getNoteService()->getNoteWithFiltre($params['filtre']);
+            if ($notes === null) {
+                self::response(self::STATUS_NOT_FOUND);
+                return;
             }
+            $reponse = array('notes' => $notes);
+            self::response(self::STATUS_OK, $reponse);
+
         } else {
 
-            if(empty($params['nbPoint']) || empty($params['coefficient']) || empty($params['appreciation']) || empty($params['date']) || empty($params['idMatiere']) || empty($params['idEleve'])
+            if(empty($params['nbPoint']) || empty($params['coefficient']) || empty($params['date']) || empty($params['idMatiere']) || empty($params['idEleve'])
                 || $params['nbPoint'] === null || $params['coefficient'] === null || $params['appreciation'] === null || $params['date'] === null || $params['idMatiere'] === null || $params['idEleve'] === null) {
                 self::response(self::STATUS_BAD_REQUEST);
                 return;
